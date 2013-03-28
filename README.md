@@ -1,24 +1,24 @@
 # BoletoBr
 
-Sistema para a emissão de boletos bancários utilizando a linguagem Ruby
+TODO: Write a gem description
 
-## Instalação
+## Installation
 
-Adicione esta linha no seu arquivo Gemfile de sua aplicação:
+Add this line to your application's Gemfile:
 
     gem 'boleto_br'
 
-Depois execute no terminal:
+And then execute:
 
-    $ bundle install
+    $ bundle
 
-Ou instale manualmente:
+Or install it yourself as:
 
     $ gem install boleto_br
 
-## Modo de uso
+## Usage
 
--- desenvolvimento --
+TODO: Write usage instructions here
 
 ## Contributing
 

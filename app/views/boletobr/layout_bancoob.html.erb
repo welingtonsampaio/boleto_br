@@ -3,15 +3,14 @@
 <head>
   <title></title>
   <meta charset="utf-8">
-  <%= stylesheet_link_tag "bb", :media => "all" %>
+  <%= stylesheet_link_tag "bancoob", :media => "all" %>
 </head>
-
 <body>
 
 <div id="container">
 
 <div id="instr_header">
-  <h1><%= data["identificacao"] %> <%= isset data["cpf_cnpj"] ? data["cpf_cnpj"] : '' %></h1>
+  <h1><%= data["identificacao"] %> <%= isset(data["cpf_cnpj"]) ? data["cpf_cnpj"] : '' %></h1>
   <address><%= data["endereco"] %><br></address>
   <address><%= data["cidade_uf"] %></address>
 </div>	<!-- id="instr_header" -->
@@ -23,10 +22,6 @@
   -->
 
   <div id="instr_content">
-    <p>
-      O pagamento deste boleto tamb&eacute;m poder&aacute; ser efetuado
-      nos terminais de Auto-Atendimento BB.
-    </p>
 
     <h2>Instru&ccedil;&otilde;es</h2>
     <ol>
@@ -53,12 +48,11 @@
 <div class="cut">
   <p>Corte na linha pontilhada</p>
 </div>
-<table cellspacing=0 cellpadding=0 width=666 border=0><TBODY><TR><TD class=ct width=666><div align=right><b class=cp>Recibo
-  do Sacado</b></div></TD></tr></tbody></table>
+
 <table class="header" border=0 cellspacing="0" cellpadding="0">
   <tbody>
   <tr>
-    <td width=150><IMG SRC="imagens/logobb.jpg"></td>
+    <td width=150><IMG SRC="imagens/logobancoob.jpg"></td>
     <td width=50>
       <div class="field_cod_banco"><%= data["codigo_banco_com_dv"]%></div>
     </td>
@@ -78,7 +72,7 @@
   </tr>
 
   <tr class="campos">
-    <td class="cedente"><%= data["cedente"] %>&nbsp;</td>
+    <td class="cedente"><%= data["cedente"]%>&nbsp;</td>
     <td class="ag_cod_cedente"><%= data["agencia_codigo"]%> &nbsp;</td>
     <td class="especie"><%= data["especie"]%>&nbsp;</td>
     <TD class="qtd"><%= data["quantidade"]%>&nbsp;</td>
@@ -98,7 +92,7 @@
   </tr>
   <tr class="campos">
     <td class="num_doc"><%= data["numero_documento"]%></td>
-    <td class="contrato"><%= data["contrato"]%></td>
+    <td class="contrato"></td>
     <td class="cpf_cei_cnpj"><%= data["cpf_cnpj"]%></td>
     <td class="vencimento"><%= data["data_vencimento"]%></td>
     <td class="valor_doc"><%= data["valor_boleto"]%></td>
@@ -151,7 +145,7 @@
 <table class="header" border=0 cellspacing="0" cellpadding="0">
   <tbody>
   <tr>
-    <td width=150><IMG SRC="imagens/logobb.jpg"></td>
+    <td width=150><IMG SRC="imagens/logobancoob.jpg"></td>
     <td width=50>
       <div class="field_cod_banco"><%= data["codigo_banco_com_dv"]%></div>
     </td>
@@ -219,7 +213,7 @@
   </tr>
   <tr class="campos">
     <td class="reservado">&nbsp;</td>
-    <td class="carteira"><%= data["carteira"]%> <%= isset(data["variacao_carteira"]) ? data["variacao_carteira"] : '&nbsp;' %></td>
+    <td class="carteira"><%= data["carteira"]%> <%= isset data["variacao_carteira"] ? data["variacao_carteira"] : '&nbsp;' %></td>
     <td class="especie2"><%= data["especie"]%></td>
     <td class="qtd2"><%= data["quantidade"]%></td>
     <td class="xvalor"><%= data["valor_unitario"]%></td>
@@ -241,13 +235,13 @@
       </tr>
       <tr class="campos">
         <td class="instrucoes" rowspan="5">
-          <p><%= data["demonstrativo1"] %></p>
-          <p><%= data["demonstrativo2"] %></p>
-          <p><%= data["demonstrativo3"] %></p>
-          <p><%= data["instrucoes1"] %></p>
-          <p><%= data["instrucoes2"] %></p>
-          <p><%= data["instrucoes3"] %></p>
-          <p><%= data["instrucoes4"] %></p>
+          <p><%= data["demonstrativo1"]%></p>
+          <p><%= data["demonstrativo2"]%></p>
+          <p><%= data["demonstrativo3"]%></p>
+          <p><%= data["instrucoes1"]%></p>
+          <p><%= data["instrucoes2"]%></p>
+          <p><%= data["instrucoes3"]%></p>
+          <p><%= data["instrucoes4"]%></p>
         </td>
       </tr>
       </tbody>
@@ -348,12 +342,15 @@
   </tr>
   </tbody>
 </table>
-<table cellspacing=0 cellpadding=0 width=666 border=0><TBODY><TR><TD width=666 align=right >
-  <font style="font-size: 10px;">Autentica&ccedil;&atilde;o mec&acirc;nica - Ficha de Compensação</font>
-</TD></tr></tbody></table>
+
+<div class="footer">
+  <p>Autentica&ccedil;&atilde;o mec&acirc;nica</p>
+</div>
+
 <div class="barcode">
   <p><%= fbarcode data["codigo_barras"] %></p>
 </div>
+
 <div class="cut">
   <p>Corte na linha pontilhada</p>
 </div>

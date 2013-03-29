@@ -12,45 +12,52 @@ module BoletoBr
                     :livre_zeros,
                     :codigo_banco_com_dv,
                     :fator_vencimento,
+                    :valor,
+                    :nosso_numero,
+                    :dv,
+                    :linha,
                     :data
+
+      def initialize
+        @data = {}
+        @data[:nosso_numero]            = nil
+        @data[:numero_documento]        = nil
+        @data[:data_vencimento]         = nil
+        @data[:data_documento]          = nil
+        @data[:data_processamento]      = nil
+        @data[:valor_boleto]            = nil
+        @data[:sacado]                  = nil
+        @data[:endereco1]               = nil
+        @data[:endereco2]               = nil
+        @data[:demonstrativo1]          = nil
+        @data[:demonstrativo2]          = nil
+        @data[:demonstrativo3]          = nil
+        @data[:instrucoes1]             = nil
+        @data[:instrucoes2]             = nil
+        @data[:instrucoes3]             = nil
+        @data[:instrucoes4]             = nil
+        @data[:quantidade]              = "10"
+        @data[:valor_unitario]          = "10"
+        @data[:aceite]                  = "N"
+        @data[:especie]                 = "R"
+        @data[:especie_doc]             = "DM"
+        @data[:agencia]                 = nil
+        @data[:conta]                   = nil
+        @data[:convenio]                = nil
+        @data[:contrato]                = nil
+        @data[:carteira]                = nil
+        @data[:variacao_carteira]       = nil
+        @data[:formatacao_convenio]     = nil
+        @data[:formatacao_nosso_numero] = "2"
+        @data[:identificacao]           = nil
+        @data[:cpf_cnpj]                = nil
+        @data[:endereco]                = nil
+        @data[:cidade_uf]               = nil
+        @data[:cedente]                 = nil
+      end
 
       def setup
         yield self
-        @data = {}
-        @data["nosso_numero"]            = nil
-        @data["numero_documento"]        = nil
-        @data["data_vencimento"]         = nil
-        @data["data_documento"]          = nil
-        @data["data_processamento"]      = nil
-        @data["valor_boleto"]            = nil
-        @data["sacado"]                  = nil
-        @data["endereco1"]               = nil
-        @data["endereco2"]               = nil
-        @data["demonstrativo1"]          = nil
-        @data["demonstrativo2"]          = nil
-        @data["demonstrativo3"]          = nil
-        @data["instrucoes1"]             = nil
-        @data["instrucoes2"]             = nil
-        @data["instrucoes3"]             = nil
-        @data["instrucoes4"]             = nil
-        @data["quantidade"]              = "10"
-        @data["valor_unitario"]          = "10"
-        @data["aceite"]                  = "N"
-        @data["especie"]                 = "R"
-        @data["especie_doc"]             = "DM"
-        @data["agencia"]                 = nil
-        @data["conta"]                   = nil
-        @data["convenio"]                = nil
-        @data["contrato"]                = nil
-        @data["carteira"]                = nil
-        @data["variacao_carteira"]       = nil
-        @data["formatacao_convenio"]     = nil
-        @data["formatacao_nosso_numero"] = "2"
-        @data["identificacao"]           = nil
-        @data["cpf_cnpj"]                = nil
-        @data["endereco"]                = nil
-        @data["cidade_uf"]               = nil
-        @data["cedente"]                 = nil
       end
 
       #protected
@@ -63,6 +70,7 @@ module BoletoBr
       # @return [String]
       def formata_numero number, loop, insert, type=nil
         type ||= "geral"
+        number = number.to_s
         if type == "geral"
           number.sub! ",",""
           while number.length < loop
@@ -86,7 +94,7 @@ module BoletoBr
       # Retorna a data do dia no formato brasileiro
       # @param [String] format
       # @return [String]
-      def self.date_today format=nil
+      def date_today format=nil
         format ||= "%d/%m/%Y"
         Date.today.strftime format
       end

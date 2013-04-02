@@ -95,7 +95,7 @@ module BoletoBr
       # @param [String] format
       # @return [String]
       def date_today format=nil
-        format ||= "%d/%m/%Y"
+        format ||= BoletoBr::date_format
         Date.today.strftime format
       end
 
@@ -133,12 +133,10 @@ module BoletoBr
         ##//Desenho da barra
         ##//Guarda inicial
 
-        _return = %`
-        <img src="/assets/boletobr/imagens/p.png" width="#{fino}" height="#{altura}" border="0" />
-        <img src="/assets/boletobr/imagens/b.png" width="#{fino}" height="#{altura}" border="0" />
-        <img src="/assets/boletobr/imagens/p.png" width="#{fino}" height="#{altura}" border="0" />
-        <img src="/assets/boletobr/imagens/b.png" width="#{fino}" height="#{altura}" border="0" />
-        `
+        _return =  %`<img src="/assets/boleto_br/p.png" width="#{fino}" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/b.png" width="#{fino}" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/p.png" width="#{fino}" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/b.png" width="#{fino}" height="#{altura}" border="0" />`
 
         texto = valor
         texto = "0#{texto}" if texto.length.odd?
@@ -152,17 +150,17 @@ module BoletoBr
             next if i.even?
             f1 = if f.slice((i-1),1) == "0" then fino else largo end
 
-            _return << %`<img src="/assets/boletobr/imagens/p.png" width="#{f1}" height="#{altura}" border="0" />`
+            _return << %`<img src="/assets/boleto_br/p.png" width="#{f1}" height="#{altura}" border="0" />`
 
             f2 = if f.slice(i,1) == "0" then fino else largo end
 
-            _return << %`<img src="/assets/boletobr/imagens/b.png" width="#{f2}" height="#{altura}" border="0" />`
+            _return << %`<img src="/assets/boleto_br/b.png" width="#{f2}" height="#{altura}" border="0" />`
 
           end
         end
-        _return << %`<img src="/assets/boletobr/imagens/p.png" width="#{largo}" height="#{altura}" border="0" />
-            <img src="/assets/boletobr/imagens/b.png" width="#{fino}" height="#{altura}" border="0" />
-            <img src="/assets/boletobr/imagens/p.png" width="1" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/p.png" width="#{largo}" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/b.png" width="#{fino}" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/p.png" width="1" height="#{altura}" border="0" />`
         _return.html_safe
       end
 

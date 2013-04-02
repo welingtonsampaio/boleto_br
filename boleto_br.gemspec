@@ -15,8 +15,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "autotest-standalone"
   gem.add_development_dependency "test_notifier"
-  gem.add_dependency "railties", ">= 3.0", "< 5.0"
-  gem.add_dependency "sprockets","> 2.1"
+  gem.add_dependency "railties",       ">= 3.1"
+  gem.add_dependency "sprockets",      ">  2.1"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="boletobr_bb">
 <head>
   <title></title>
   <meta charset="utf-8">
@@ -11,9 +11,9 @@
 <div id="container">
 
 <div id="instr_header">
-  <h1><%= data["identificacao"] %> <%= isset data["cpf_cnpj"] ? data["cpf_cnpj"] : '' %></h1>
-  <address><%= data["endereco"] %><br></address>
-  <address><%= data["cidade_uf"] %></address>
+  <h1><%= @boleto.data[:identificacao] %> <%= if @boleto.data[:cpf_cnpj] then @boleto.data[:cpf_cnpj] else '' end %></h1>
+  <address><%= @boleto.data[:endereco] %><br></address>
+  <address><%= @boleto.data[:cidade_uf] %></address>
 </div>	<!-- id="instr_header" -->
 
 <div id="">
@@ -58,11 +58,11 @@
 <table class="header" border=0 cellspacing="0" cellpadding="0">
   <tbody>
   <tr>
-    <td width=150><IMG SRC="imagens/logobb.jpg"></td>
+    <td width=150><IMG SRC="/assets/boleto_br/logobb.jpg"></td>
     <td width=50>
-      <div class="field_cod_banco"><%= data["codigo_banco_com_dv"]%></div>
+      <div class="field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
     </td>
-    <td class="linha_digitavel"><%= data["linha_digitavel"]%></td>
+    <td class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></td>
   </tr>
   </tbody>
 </table>
@@ -78,11 +78,11 @@
   </tr>
 
   <tr class="campos">
-    <td class="cedente"><%= data["cedente"] %>&nbsp;</td>
-    <td class="ag_cod_cedente"><%= data["agencia_codigo"]%> &nbsp;</td>
-    <td class="especie"><%= data["especie"]%>&nbsp;</td>
-    <TD class="qtd"><%= data["quantidade"]%>&nbsp;</td>
-    <TD class="nosso_numero"><%= data["nosso_numero"]%>&nbsp;</td>
+    <td class="cedente"><%= @boleto.data[:cedente] %>&nbsp;</td>
+    <td class="ag_cod_cedente"><%= @boleto.data[:agencia_codigo]%> &nbsp;</td>
+    <td class="especie"><%= @boleto.data[:especie]%>&nbsp;</td>
+    <TD class="qtd"><%= @boleto.data[:quantidade]%>&nbsp;</td>
+    <TD class="nosso_numero"><%= @boleto.data[:nosso_numero]%>&nbsp;</td>
   </tr>
   </tbody>
 </table>
@@ -97,11 +97,11 @@
     <td class="valor_doc">Valor documento</TD>
   </tr>
   <tr class="campos">
-    <td class="num_doc"><%= data["numero_documento"]%></td>
-    <td class="contrato"><%= data["contrato"]%></td>
-    <td class="cpf_cei_cnpj"><%= data["cpf_cnpj"]%></td>
-    <td class="vencimento"><%= data["data_vencimento"]%></td>
-    <td class="valor_doc"><%= data["valor_boleto"]%></td>
+    <td class="num_doc"><%= @boleto.data[:numero_documento]%></td>
+    <td class="contrato"><%= @boleto.data[:contrato]%></td>
+    <td class="cpf_cei_cnpj"><%= @boleto.data[:cpf_cnpj]%></td>
+    <td class="vencimento"><%= @boleto.data[:data_vencimento]%></td>
+    <td class="valor_doc"><%= @boleto.data[:valor_boleto]%></td>
   </tr>
   </tbody>
 </table>
@@ -132,7 +132,7 @@
     <td class="sacado">Sacado</td>
   </tr>
   <tr class="campos">
-    <td class="sacado"><%= data["sacado"]%></td>
+    <td class="sacado"><%= @boleto.data[:sacado]%></td>
   </tr>
   </tbody>
 </table>
@@ -151,11 +151,11 @@
 <table class="header" border=0 cellspacing="0" cellpadding="0">
   <tbody>
   <tr>
-    <td width=150><IMG SRC="imagens/logobb.jpg"></td>
+    <td width=150><IMG SRC="/assets/boleto_br/logobb.jpg"></td>
     <td width=50>
-      <div class="field_cod_banco"><%= data["codigo_banco_com_dv"]%></div>
+      <div class="field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
     </td>
-    <td class="linha_digitavel"><%= data["linha_digitavel"]%></td>
+    <td class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></td>
   </tr>
   </tbody>
 </table>
@@ -168,7 +168,7 @@
   </tr>
   <tr class="campos">
     <td class="local_pagto">QUALQUER BANCO AT&Eacute; O VENCIMENTO</td>
-    <td class="vencimento2"><%= data["data_vencimento"]%></td>
+    <td class="vencimento2"><%= @boleto.data[:data_vencimento]%></td>
   </tr>
   </tbody>
 </table>
@@ -180,8 +180,8 @@
     <td class="ag_cod_cedente2">Ag&ecirc;ncia/C&oacute;digo cedente</td>
   </tr>
   <tr class="campos">
-    <td class="cedente2"><%= data["cedente"]%></td>
-    <td class="ag_cod_cedente2"><%= data["agencia_codigo"]%></td>
+    <td class="cedente2"><%= @boleto.data[:cedente]%></td>
+    <td class="ag_cod_cedente2"><%= @boleto.data[:agencia_codigo]%></td>
   </tr>
   </tbody>
 </table>
@@ -197,12 +197,12 @@
     <td class="nosso_numero2">Nosso n&uacute;mero</td>
   </tr>
   <tr class="campos">
-    <td class="data_doc"><%= data["data_documento"]%></td>
-    <td class="num_doc2"><%= data["numero_documento"]%></td>
-    <td class="especie_doc"><%= data["especie_doc"]%></td>
-    <td class="aceite"><%= data["aceite"]%></td>
-    <td class="data_process"><%= data["data_processamento"]%></td>
-    <td class="nosso_numero2"><%= data["nosso_numero"]%></td>
+    <td class="data_doc"><%= @boleto.data[:data_documento]%></td>
+    <td class="num_doc2"><%= @boleto.data[:numero_documento]%></td>
+    <td class="especie_doc"><%= @boleto.data[:especie_doc]%></td>
+    <td class="aceite"><%= @boleto.data[:aceite]%></td>
+    <td class="data_process"><%= @boleto.data[:data_processamento]%></td>
+    <td class="nosso_numero2"><%= @boleto.data[:nosso_numero]%></td>
   </tr>
   </tbody>
 </table>
@@ -219,11 +219,11 @@
   </tr>
   <tr class="campos">
     <td class="reservado">&nbsp;</td>
-    <td class="carteira"><%= data["carteira"]%> <%= isset(data["variacao_carteira"]) ? data["variacao_carteira"] : '&nbsp;' %></td>
-    <td class="especie2"><%= data["especie"]%></td>
-    <td class="qtd2"><%= data["quantidade"]%></td>
-    <td class="xvalor"><%= data["valor_unitario"]%></td>
-    <td class="valor_doc2"><%= data["valor_boleto"]%></td>
+    <td class="carteira"><%= @boleto.data[:carteira]%> <%= if(@boleto.data[:variacao_carteira]) then @boleto.data[:variacao_carteira] else '&nbsp;' end %></td>
+    <td class="especie2"><%= @boleto.data[:especie]%></td>
+    <td class="qtd2"><%= @boleto.data[:quantidade]%></td>
+    <td class="xvalor"><%= @boleto.data[:valor_unitario]%></td>
+    <td class="valor_doc2"><%= @boleto.data[:valor_boleto]%></td>
   </tr>
   </tbody>
 </table>
@@ -241,13 +241,13 @@
       </tr>
       <tr class="campos">
         <td class="instrucoes" rowspan="5">
-          <p><%= data["demonstrativo1"] %></p>
-          <p><%= data["demonstrativo2"] %></p>
-          <p><%= data["demonstrativo3"] %></p>
-          <p><%= data["instrucoes1"] %></p>
-          <p><%= data["instrucoes2"] %></p>
-          <p><%= data["instrucoes3"] %></p>
-          <p><%= data["instrucoes4"] %></p>
+          <p><%= @boleto.data[:demonstrativo1] %></p>
+          <p><%= @boleto.data[:demonstrativo2] %></p>
+          <p><%= @boleto.data[:demonstrativo3] %></p>
+          <p><%= @boleto.data[:instrucoes1] %></p>
+          <p><%= @boleto.data[:instrucoes2] %></p>
+          <p><%= @boleto.data[:instrucoes3] %></p>
+          <p><%= @boleto.data[:instrucoes4] %></p>
         </td>
       </tr>
       </tbody>
@@ -329,9 +329,9 @@
   </tr>
   <tr class="campos">
     <td class="sacado2">
-      <p><%= data["sacado"]%></p>
-      <p><%= data["endereco1"]%></p>
-      <p><%= data["endereco2"]%></p>
+      <p><%= @boleto.data[:sacado]%></p>
+      <p><%= @boleto.data[:endereco1]%></p>
+      <p><%= @boleto.data[:endereco2]%></p>
     </td>
   </tr>
   </tbody>
@@ -352,7 +352,7 @@
   <font style="font-size: 10px;">Autentica&ccedil;&atilde;o mec&acirc;nica - Ficha de Compensação</font>
 </TD></tr></tbody></table>
 <div class="barcode">
-  <p><%= fbarcode data["codigo_barras"] %></p>
+  <p><%= @boleto.fbarcode @boleto.data[:codigo_barras] %></p>
 </div>
 <div class="cut">
   <p>Corte na linha pontilhada</p>

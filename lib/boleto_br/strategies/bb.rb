@@ -13,7 +13,7 @@ module BoletoBr
         super
         @codigo_banco_com_dv  = geraCodigoBanco @codigo_banco
         @fator_vencimento     = (Date.new(1997, 10, 7).jd - @data_venc.jd).abs
-        @valor                = formata_numero @data[:valor_boleto], 10, 0, "valor"
+        @valor                = formata_numero @valor_boleto, 10, 0, "valor"
         @agencia              = formata_numero @data[:agencia],       4, 0
         @conta                = formata_numero @data[:conta],         8, 0
         @carteira             = @data[:carteira]
@@ -28,10 +28,10 @@ module BoletoBr
         @data[:agencia_codigo]      = @agencia_codigo
         @data[:nosso_numero]        = @nosso_numero
         @data[:codigo_banco_com_dv] = @codigo_banco_com_dv
-        @data[:data_vencimento]     = @data_venc
+        @data[:data_vencimento]     = @data_venc.strftime BoletoBr::date_format
         @data[:data_documento]      = date_today
         @data[:data_processamento]  = date_today
-        @data[:valor_boleto]        = @valor_boleto
+        #@data[:valor_boleto]        = @valor_boleto
 
       end
 
@@ -60,7 +60,7 @@ module BoletoBr
             "#{@nosso_numero}"     <<
             "#{@carteira}"
         #//montando o nosso numero que aparecerá no boleto
-        @nosso_numero = "#{@convenio}#{@nossonumero}-#{modulo_11 "#{@convenio}#{@nossonumero}"}"
+        @nosso_numero = "#{@convenio}#{@nosso_numero}-#{modulo_11 "#{@convenio}#{@nosso_numero}"}"
       end
 
       def formatacao_7
@@ -85,8 +85,9 @@ module BoletoBr
                  "#{@convenio}"         <<
                  "#{@nosso_numero}"     <<
                  "#{@carteira}"
+        @linha;
         #//montando o nosso numero que aparecerá no boleto
-        @nosso_numero = "#{@convenio}#{@nossonumero}"
+        @nosso_numero = "#{@convenio}#{@nosso_numero}"
       end
 
       def formatacao_6
@@ -115,7 +116,7 @@ module BoletoBr
                    "#{@conta}"            <<
                    "#{@carteira}"
           #//montando o nosso numero que aparecerá no boleto
-          @nosso_numero = "#{@convenio}#{@nossonumero}-#{modulo_11 "#{@convenio}#{@nossonumero}"}"
+          @nosso_numero = "#{@convenio}#{@nosso_numero}-#{modulo_11 "#{@convenio}#{@nosso_numero}"}"
         end
         if @data[:formatacao_nosso_numero] == "2"
           nservico = "21"
@@ -137,7 +138,7 @@ module BoletoBr
                    "#{@nosso_numero}"     <<
                    "#{nservico}"
           #//montando o nosso numero que aparecerá no boleto
-          @nosso_numero = "#{@convenio}#{@nossonumero}-#{modulo_11 "#{@convenio}#{@nossonumero}"}"
+          @nosso_numero = "#{@convenio}#{@nosso_numero}-#{modulo_11 "#{@convenio}#{@nosso_numero}"}"
         end
       end
 

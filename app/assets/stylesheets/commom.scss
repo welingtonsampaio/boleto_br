@@ -1,0 +1,129 @@
+@mixin defaults-widths($start:0, $width:25, $count:1) {
+  $i: 1;
+  @while( $i <= $count) {
+    .w#{$start + (($i - 1) * $width)} { width: #{($start + (($i - 1) * $width))}px; }
+    $i: $i + 1;
+  }
+}
+
+@media print {
+  .container {
+    .instructions { display: none; }
+  }
+}
+
+@media screen,print {
+
+  html.boletobr {
+
+    //* *** TIPOGRAFIA BASICA *** */
+
+    * {
+      font-family: Arial;
+      font-size: 12px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .notice {
+      color: red;
+    }
+
+    .clearfix {
+      *zoom: 1;
+      &:before,
+      &:after {
+        display: table;
+        line-height: 0;
+        content: "";
+      }
+
+      &:after {
+        clear: both;
+      }
+    }
+
+    .text-left {text-align: left;}
+    .text-center {text-align: center;}
+    .text-right {text-align: right;}
+
+
+
+
+    //* *** Default widths *** */
+    @include defaults-widths(10,10,67);
+
+    //* *** LINHAS GERAIS *** */
+    .container {
+      width: 666px;
+      margin: 0px auto;
+      padding-bottom: 30px;
+
+
+
+      //* *** CABECALHO *** */
+      .instructions {
+        margin: 0;
+        padding: 0 0 20px 0;
+        .instr_header {
+          background: url('/assets/boleto_br/logo.png') no-repeat top left;
+          padding-left: 160px;
+          height: 65px;
+          h1 {
+            font-size: 16px;
+            margin: 5px 0px;
+          }
+          address {
+            font-style: normal;
+          }
+        }
+
+        .instr_content {
+          h2 {
+            font-size: 10px;
+            font-weight: bold;
+          }
+          p {
+            font-size: 10px;
+            margin: 4px 0px;
+          }
+          ol {
+            font-size: 10px;
+            margin: 5px 0;
+            li {
+              font-size: 10px;
+              text-indent: 10px;
+              margin: 2px 0px;
+              list-style-position: inside;
+              p {
+                font-size: 10px;
+                padding-bottom: 4px;
+              }
+            }
+          }
+        }
+      }
+
+      .boleto {
+        width: 666px;
+        margin: 0;
+        padding: 0;
+        .cut {
+          width: 666px;
+          margin: 0px auto;
+          border-bottom: 1px navy dashed;
+          p {
+            margin: 0 0 5px 0;
+            padding: 0px;
+            font-family: 'Arial Narrow';
+            font-size: 9px;
+            color: navy;
+          }
+        }
+        .recibo {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

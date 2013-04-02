@@ -13,7 +13,7 @@ module BoletoBr
         super
         @codigo_banco_com_dv  = geraCodigoBanco @codigo_banco
         @fator_vencimento     = (Date.new(1997, 10, 7).jd - @data_venc.jd).abs
-        @valor                = formata_numero @valor_boleto, 10, 0, "valor"
+        @valor                = formata_numero String.new(@valor_boleto), 10, 0, "valor"
         @agencia              = formata_numero @data[:agencia],       4, 0
         @conta                = formata_numero @data[:conta],         8, 0
         @carteira             = @data[:carteira]
@@ -31,7 +31,7 @@ module BoletoBr
         @data[:data_vencimento]     = @data_venc.strftime BoletoBr::date_format
         @data[:data_documento]      = date_today
         @data[:data_processamento]  = date_today
-        #@data[:valor_boleto]        = @valor_boleto
+        @data[:valor_boleto]        = @valor_boleto
 
       end
 

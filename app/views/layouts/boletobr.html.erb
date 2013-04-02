@@ -1,1 +1,35 @@
-<%= yield %>
+<!DOCTYPE html>
+<html class="boletobr">
+<head>
+  <title><%= BoletoBr::title %></title>
+  <meta charset="utf-8">
+  <%= yield :header %>
+</head>
+<body>
+  <div class="container">
+    <div class="instructions">
+      <div class="instr_header">
+        <h1><%= BoletoBr::identificacao %> <%= BoletoBr::cpf_cnpj %></h1>
+        <address><%= BoletoBr::endereco %><br></address>
+        <address><%= BoletoBr::cidade_uf %></address>
+      </div> <!-- final .instr_header -->
+      <div class="instr_content">
+        <h2>Instruções</h2>
+        <ol>
+          <li>
+            Imprima em impressora jato de tinta (ink jet) ou laser, em qualidade normal ou alta. Não use modo econômico.
+            <p class="notice">Por favor, configure margens esquerda e direita para 17mm.</p>
+          </li>
+          <li>
+            Utilize folha A4 (210 x 297 mm) ou Carta (216 x 279 mm) e margens mínimas à esquerda e à direita do formulário.
+          </li>
+          <li>
+            Corte na linha indicada. Não rasure, risque, fure ou dobre a região onde se encontra o código de barras
+          </li>
+        </ol>
+      </div> <!-- final .instr_content -->
+    </div> <!-- final .instructions -->
+    <%= yield %>
+  </div> <!-- final .container -->
+</body>
+</html>

@@ -1,353 +1,261 @@
-<!DOCTYPE html>
-<html class="boletobr_bb">
-<head>
-  <title></title>
-  <meta charset="utf-8">
+<% content_for :header do %>
   <%= stylesheet_link_tag "bb", :media => "all" %>
-</head>
-
-<body>
-
-<div id="container">
-
-<div id="instr_header">
-  <h1><%= @boleto.data[:identificacao] %> <%= if @boleto.data[:cpf_cnpj] then @boleto.data[:cpf_cnpj] else '' end %></h1>
-  <address><%= @boleto.data[:endereco] %><br></address>
-  <address><%= @boleto.data[:cidade_uf] %></address>
-</div>	<!-- id="instr_header" -->
-
-<div id="">
-  <!--
-   Use no lugar do <div id=""> caso queira imprimir sem o logotipo e instruções
-   <div id="instructions">
-  -->
-
-  <div id="instr_content">
-    <p>
-      O pagamento deste boleto tamb&eacute;m poder&aacute; ser efetuado
-      nos terminais de Auto-Atendimento BB.
-    </p>
-
-    <h2>Instru&ccedil;&otilde;es</h2>
-    <ol>
-      <li>
-        Imprima em impressora jato de tinta (ink jet) ou laser, em
-        qualidade normal ou alta. N&atilde;o use modo econ&ocirc;mico.
-        <p class="notice">Por favor, configure margens esquerda e direita
-          para 17mm.</p>
-      </li>
-      <li>
-        Utilize folha A4 (210 x 297 mm) ou Carta (216 x 279 mm) e margens
-        m&iacute;nimas &agrave; esquerda e &agrave; direita do
-        formul&aacute;rio.
-      </li>
-      <li>
-        Corte na linha indicada. N&atilde;o rasure, risque, fure ou dobre
-        a regi&atilde;o onde se encontra o c&oacute;digo de barras
-      </li>
-    </ol>
-  </div>	<!-- id="instr_content" -->
-</div>	<!-- id="instructions" -->
-
-<div id="boleto">
-<div class="cut">
-  <p>Corte na linha pontilhada</p>
-</div>
-<table cellspacing=0 cellpadding=0 width=666 border=0><TBODY><TR><TD class=ct width=666><div align=right><b class=cp>Recibo
-  do Sacado</b></div></TD></tr></tbody></table>
-<table class="header" border=0 cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr>
-    <td width=150><IMG SRC="/assets/boleto_br/logobb.jpg"></td>
-    <td width=50>
-      <div class="field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
-    </td>
-    <td class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="cedente">Cedente</TD>
-    <td class="ag_cod_cedente">Ag&ecirc;ncia / C&oacute;digo do Cedente</td>
-    <td class="especie">Esp&eacute;cie</TD>
-    <td class="qtd">Quantidade</TD>
-    <td class="nosso_numero">Nosso n&uacute;mero</td>
-  </tr>
-
-  <tr class="campos">
-    <td class="cedente"><%= @boleto.data[:cedente] %>&nbsp;</td>
-    <td class="ag_cod_cedente"><%= @boleto.data[:agencia_codigo]%> &nbsp;</td>
-    <td class="especie"><%= @boleto.data[:especie]%>&nbsp;</td>
-    <TD class="qtd"><%= @boleto.data[:quantidade]%>&nbsp;</td>
-    <TD class="nosso_numero"><%= @boleto.data[:nosso_numero]%>&nbsp;</td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellPadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="num_doc">N&uacute;mero do documento</td>
-    <td class="contrato">Contrato</TD>
-    <td class="cpf_cei_cnpj">CPF/CEI/CNPJ</TD>
-    <td class="vencmento">Vencimento</TD>
-    <td class="valor_doc">Valor documento</TD>
-  </tr>
-  <tr class="campos">
-    <td class="num_doc"><%= @boleto.data[:numero_documento]%></td>
-    <td class="contrato"><%= @boleto.data[:contrato]%></td>
-    <td class="cpf_cei_cnpj"><%= @boleto.data[:cpf_cnpj]%></td>
-    <td class="vencimento"><%= @boleto.data[:data_vencimento]%></td>
-    <td class="valor_doc"><%= @boleto.data[:valor_boleto]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellPadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="desconto">(-) Desconto / Abatimento</td>
-    <td class="outras_deducoes">(-) Outras dedu&ccedil;&otilde;es</td>
-    <td class="mora_multa">(+) Mora / Multa</td>
-    <td class="outros_acrescimos">(+) Outros acr&eacute;scimos</td>
-    <td class="valor_cobrado">(=) Valor cobrado</td>
-  </tr>
-  <tr class="campos">
-    <td class="desconto">&nbsp;</td>
-    <td class="outras_deducoes">&nbsp;</td>
-    <td class="mora_multa">&nbsp;</td>
-    <td class="outros_acrescimos">&nbsp;</td>
-    <td class="valor_cobrado">&nbsp;</td>
-  </tr>
-  </tbody>
-</table>
-
-
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="sacado">Sacado</td>
-  </tr>
-  <tr class="campos">
-    <td class="sacado"><%= @boleto.data[:sacado]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<div class="footer">
-  <p>Autentica&ccedil;&atilde;o mec&acirc;nica</p>
-</div>
+ <% end %>
 
 
 
-<div class="cut">
-  <p>Corte na linha pontilhada</p>
-</div>
+<div id="bb">
+  <div class="boleto">
+    <div class="cut">
+      <p>Corte na linha pontilhada</p>
+    </div><!-- final .cut -->
+
+    <div class="recibo">
+      <strong>Recibo do Sacado</strong>
+    </div><!-- final .cut_footer -->
+
+    <div class="header">
+      <div class="w150"><img src="/assets/boleto_br/logobb.jpg" /></div>
+      <div class="w50 field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
+      <div class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></div>
+    </div><!-- final .header -->
+
+    <div class="line clearfix">
+      <div class="w300 border">
+        <p class="title text-left">Cedente</p>
+        <p class="content text-left"><%= BoletoBr::cedente %>&nbsp;</p>
+      </div>
+      <div class="w130 border">
+        <p class="title text-left">Agência / Código do Cedente</p>
+        <p class="content text-right"><%= @boleto.data[:agencia_codigo]%>&nbsp;</p>
+      </div>
+      <div class="w40 border">
+        <p class="title text-left">Espécie</p>
+        <p class="content text-center"><%= @boleto.data[:especie]%>&nbsp;</p>
+      </div>
+      <div class="w50 border">
+        <p class="title text-left">Quantidade</p>
+        <p class="content text-center"><%= @boleto.data[:quantidade]%>&nbsp;</p>
+      </div>
+      <div class="w120 border">
+        <p class="title text-left">Nosso número</p>
+        <p class="content text-right"><%= @boleto.data[:nosso_numero]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w120 border">
+        <p class="title text-left">N&uacute;mero do documento</p>
+        <p class="content text-left"><%= @boleto.data[:numero_documento] %></p>
+      </div>
+      <div class="w80 border">
+        <p class="title text-left">Contrato</p>
+        <p class="content text-left"><%= @boleto.data[:contrato]%></p>
+      </div>
+      <div class="w130 border">
+        <p class="title text-left">CPF/CEI/CNPJ</p>
+        <p class="content text-left"><%= BoletoBr::cpf_cnpj %></p>
+      </div>
+      <div class="w130 border">
+        <p class="title text-left">Vencimento</p>
+        <p class="content text-center"><%= @boleto.data[:data_vencimento]%></p>
+      </div>
+      <div class="w180 border">
+        <p class="title text-left">Valor documento</p>
+        <p class="content text-right"><%= @boleto.data[:valor_boleto]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w120 border">
+        <p class="title text-left">(-) Desconto / Abatimento</p>
+        <p class="content text-left">&nbsp;</p>
+      </div>
+      <div class="w120 border">
+        <p class="title text-left">(-) Outras dedu&ccedil;&otilde;es</p>
+        <p class="content text-left">&nbsp;</p>
+      </div>
+      <div class="w110 border">
+        <p class="title text-left">(+) Mora / Multa</p>
+        <p class="content text-left">&nbsp;</p>
+      </div>
+      <div class="w110 border">
+        <p class="title text-left">(+) Outros acr&eacute;scimos</p>
+        <p class="content text-center">&nbsp;</p>
+      </div>
+      <div class="w180 border highlight">
+        <p class="title text-left">(=) Valor cobrado</p>
+        <p class="content text-right">&nbsp;</p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w660 border">
+        <p class="title text-left">Sacado</p>
+        <p class="content text-left"><%= @boleto.data[:sacado]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="footer">
+      <p>Autentica&ccedil;&atilde;o mec&acirc;nica</p>
+    </div>
+
+    <div class="cut">
+      <p>Corte na linha pontilhada</p>
+    </div>
+
+    <div class="header">
+      <div class="w150"><img src="/assets/boleto_br/logobb.jpg" /></div>
+      <div class="w50 field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
+      <div class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></div>
+    </div><!-- final .header -->
+
+    <div class="line clearfix">
+      <div class="w470 border">
+        <p class="title text-left">Local de pagamento</p>
+        <p class="content text-left">QUALQUER BANCO ATÉ O VENCIMENTO</p>
+      </div>
+      <div class="w180 border highlight">
+        <p class="title text-left">Vencimento</p>
+        <p class="content text-right"><%= @boleto.data[:data_vencimento]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w470 border">
+        <p class="title text-left">Cedente</p>
+        <p class="content text-left"><%= BoletoBr::cedente %></p>
+      </div>
+      <div class="w180 border">
+        <p class="title text-left">Ag&ecirc;ncia/C&oacute;digo cedente</p>
+        <p class="content text-right"><%= @boleto.data[:agencia_codigo]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w100 border">
+        <p class="title text-left">Data do documento</p>
+        <p class="content text-left"><%= @boleto.data[:data_documento]%></p>
+      </div>
+      <div class="w160 border">
+        <p class="title text-left">No. documento</p>
+        <p class="content text-left"><%= @boleto.data[:numero_documento]%></p>
+      </div>
+      <div class="w70 border">
+        <p class="title text-left">Esp&eacute;cie doc.</p>
+        <p class="content text-center"><%= @boleto.data[:especie_doc]%></p>
+      </div>
+      <div class="w40 border">
+        <p class="title text-left">Aceite</p>
+        <p class="content text-center"><%= @boleto.data[:aceite]%></p>
+      </div>
+      <div class="w80 border">
+        <p class="title text-left">Data process.</p>
+        <p class="content text-left"><%= @boleto.data[:data_processamento]%></p>
+      </div>
+      <div class="w180 border">
+        <p class="title text-left">Nosso n&uacute;mero</p>
+        <p class="content text-right"><%= @boleto.data[:nosso_numero]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w100 border highlight">
+        <p class="title text-left">Uso do banco</p>
+        <p class="content text-left"></p>
+      </div>
+      <div class="w80 border">
+        <p class="title text-left">Carteira</p>
+        <p class="content text-center"><%= @boleto.data[:carteira]%> <%= if(@boleto.data[:variacao_carteira]) then @boleto.data[:variacao_carteira] else '&nbsp;' end %></p>
+      </div>
+      <div class="w70 border">
+        <p class="title text-left">Espécie</p>
+        <p class="content text-center"><%= @boleto.data[:especie]%></p>
+      </div>
+      <div class="w120 border">
+        <p class="title text-left">Quantidade</p>
+        <p class="content text-center"><%= @boleto.data[:quantidade]%></p>
+      </div>
+      <div class="w80 border">
+        <p class="title text-left">x Valor</p>
+        <p class="content text-right"><%= @boleto.data[:valor_unitario]%></p>
+      </div>
+      <div class="w180 border">
+        <p class="title text-left">(=) Valor documento</p>
+        <p class="content text-right"><%= @boleto.data[:valor_boleto]%></p>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w480 instrucoes">
+        <p class="title text-left">Instru&ccedil;&otilde;es (Texto de responsabilidade do cedente)</p>
+        <p>&nbsp;</p>
+        <p class="content text-left"><%= @boleto.data[:demonstrativo1] %></p>
+        <p class="content text-left"><%= @boleto.data[:demonstrativo2] %></p>
+        <p class="content text-left"><%= @boleto.data[:demonstrativo3] %></p>
+        <p class="content text-left"><%= @boleto.data[:instrucoes1] %></p>
+        <p class="content text-left"><%= @boleto.data[:instrucoes2] %></p>
+        <p class="content text-left"><%= @boleto.data[:instrucoes3] %></p>
+        <p class="content text-left"><%= @boleto.data[:instrucoes4] %></p>
+      </div>
+      <div class="w180">
+        <div class="clearfix line">
+          <div class="w180 border">
+            <p class="title text-left">(-) Desconto / Abatimento</p>
+            <p class="content text-center">&nbsp;</p>
+          </div>
+        </div>
+        <div class="clearfix line">
+          <div class="w180 border">
+            <p class="title text-left">(-) Outras deduções</p>
+            <p class="content text-center">&nbsp;</p>
+          </div>
+        </div>
+        <div class="clearfix line">
+          <div class="w180 border">
+            <p class="title text-left">(+) Mora / Multa</p>
+            <p class="content text-center">&nbsp;</p>
+          </div>
+        </div>
+        <div class="clearfix line">
+          <div class="w180 border">
+            <p class="title text-left">(+) Outros Acréscimos</p>
+            <p class="content text-center">&nbsp;</p>
+          </div>
+        </div>
+        <div class="clearfix line">
+          <div class="w180 border highlight">
+            <p class="title text-left">(=) Valor cobrado</p>
+            <p class="content text-center">&nbsp;</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- final .line -->
+
+    <div class="line clearfix">
+      <div class="w660 border">
+        <p class="title text-left">Sacado</p>
+        <p class="content text-left"><%= @boleto.data[:sacado]%></p>
+        <p class="content text-left"><%= @boleto.data[:endereco1]%></p>
+        <p class="content text-left"><%= @boleto.data[:endereco2]%></p>
+      </div>
+    </div><!-- final .line -->
 
 
-<table class="header" border=0 cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr>
-    <td width=150><IMG SRC="/assets/boleto_br/logobb.jpg"></td>
-    <td width=50>
-      <div class="field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
-    </td>
-    <td class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="local_pagto">Local de pagamento</td>
-    <td class="vencimento2">Vencimento</td>
-  </tr>
-  <tr class="campos">
-    <td class="local_pagto">QUALQUER BANCO AT&Eacute; O VENCIMENTO</td>
-    <td class="vencimento2"><%= @boleto.data[:data_vencimento]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="cedente2">Cedente</td>
-    <td class="ag_cod_cedente2">Ag&ecirc;ncia/C&oacute;digo cedente</td>
-  </tr>
-  <tr class="campos">
-    <td class="cedente2"><%= @boleto.data[:cedente]%></td>
-    <td class="ag_cod_cedente2"><%= @boleto.data[:agencia_codigo]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="data_doc">Data do documento</td>
-    <td class="num_doc2">No. documento</td>
-    <td class="especie_doc">Esp&eacute;cie doc.</td>
-    <td class="aceite">Aceite</td>
-    <td class="data_process">Data process.</td>
-    <td class="nosso_numero2">Nosso n&uacute;mero</td>
-  </tr>
-  <tr class="campos">
-    <td class="data_doc"><%= @boleto.data[:data_documento]%></td>
-    <td class="num_doc2"><%= @boleto.data[:numero_documento]%></td>
-    <td class="especie_doc"><%= @boleto.data[:especie_doc]%></td>
-    <td class="aceite"><%= @boleto.data[:aceite]%></td>
-    <td class="data_process"><%= @boleto.data[:data_processamento]%></td>
-    <td class="nosso_numero2"><%= @boleto.data[:nosso_numero]%></td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellPadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="reservado">Uso do  banco</td>
-    <td class="carteira">Carteira</td>
-    <td class="especie2">Espécie</td>
-    <td class="qtd2">Quantidade</td>
-    <td class="xvalor">x Valor</td>
-    <td class="valor_doc2">(=) Valor documento</td>
-  </tr>
-  <tr class="campos">
-    <td class="reservado">&nbsp;</td>
-    <td class="carteira"><%= @boleto.data[:carteira]%> <%= if(@boleto.data[:variacao_carteira]) then @boleto.data[:variacao_carteira] else '&nbsp;' end %></td>
-    <td class="especie2"><%= @boleto.data[:especie]%></td>
-    <td class="qtd2"><%= @boleto.data[:quantidade]%></td>
-    <td class="xvalor"><%= @boleto.data[:valor_unitario]%></td>
-    <td class="valor_doc2"><%= @boleto.data[:valor_boleto]%></td>
-  </tr>
-  </tbody>
-</table>
+    <div class="line clearfix">
+      <div class="w470 border">
+        <p class="title text-left">Sacador/Avalista</p>
+        <p class="content text-left">&nbsp;</p>
+      </div>
+      <div class="w180">
+        <p class="title text-left">&nbsp;</p>
+        <div class="border">
+          <p class="content text-left">Cód. baixa</p>
+        </div>
+      </div>
+    </div><!-- final .line -->
 
 
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr><td class="last_line" rowspan="6">
-    <table class="line" cellspacing="0" cellpadding="0">
-      <tbody>
-      <tr class="titulos">
-        <td class="instrucoes">
-          Instru&ccedil;&otilde;es (Texto de responsabilidade do cedente)
-        </td>
-      </tr>
-      <tr class="campos">
-        <td class="instrucoes" rowspan="5">
-          <p><%= @boleto.data[:demonstrativo1] %></p>
-          <p><%= @boleto.data[:demonstrativo2] %></p>
-          <p><%= @boleto.data[:demonstrativo3] %></p>
-          <p><%= @boleto.data[:instrucoes1] %></p>
-          <p><%= @boleto.data[:instrucoes2] %></p>
-          <p><%= @boleto.data[:instrucoes3] %></p>
-          <p><%= @boleto.data[:instrucoes4] %></p>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </td></tr>
-
-  <tr><td>
-    <table class="line" cellspacing="0" cellpadding="0">
-      <tbody>
-      <tr class="titulos">
-        <td class="desconto2">(-) Desconto / Abatimento</td>
-      </tr>
-      <tr class="campos">
-        <td class="desconto2">&nbsp;</td>
-      </tr>
-      </tbody>
-    </table>
-  </td></tr>
-
-  <tr><td>
-    <table class="line" cellspacing="0" cellpadding="0">
-      <tbody>
-      <tr class="titulos">
-        <td class="outras_deducoes2">(-) Outras dedu&ccedil;&otilde;es</td>
-      </tr>
-      <tr class="campos">
-        <td class="outras_deducoes2">&nbsp;</td>
-      </tr>
-      </tbody>
-    </table>
-  </td></tr>
-
-  <tr><td>
-    <table class="line" cellspacing="0" cellpadding="0">
-      <tbody>
-      <tr class="titulos">
-        <td class="mora_multa2">(+) Mora / Multa</td>
-      </tr>
-      <tr class="campos">
-        <td class="mora_multa2">&nbsp;</td>
-      </tr>
-      </tbody>
-    </table>
-  </td></tr>
-
-  <tr><td>
-    <table class="line" cellspacing="0" cellpadding="0">
-      <tbody>
-      <tr class="titulos">
-        <td class="outros_acrescimos2">(+) Outros Acr&eacute;scimos</td>
-      </tr>
-      <tr class="campos">
-        <td class="outros_acrescimos2">&nbsp;</td>
-      </tr>
-      </tbody>
-    </table>
-  </td></tr>
-
-  <tr><td class="last_line">
-    <table class="line" cellspacing="0" cellpadding="0">
-      <tbody>
-      <tr class="titulos">
-        <td class="valor_cobrado2">(=) Valor cobrado</td>
-      </tr>
-      <tr class="campos">
-        <td class="valor_cobrado2">&nbsp;</td>
-      </tr>
-      </tbody>
-    </table>
-  </td></tr>
-  </tbody>
-</table>
-
-
-<table class="line" cellspacing="0" cellPadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="sacado2">Sacado</td>
-  </tr>
-  <tr class="campos">
-    <td class="sacado2">
-      <p><%= @boleto.data[:sacado]%></p>
-      <p><%= @boleto.data[:endereco1]%></p>
-      <p><%= @boleto.data[:endereco2]%></p>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
-<table class="line" cellspacing="0" cellpadding="0">
-  <tbody>
-  <tr class="titulos">
-    <td class="sacador_avalista" colspan="2">Sacador/Avalista</td>
-  </tr>
-  <tr class="campos">
-    <td class="sacador_avalista">&nbsp;</td>
-    <td class="cod_baixa">C&oacute;d. baixa</td>
-  </tr>
-  </tbody>
-</table>
 <table cellspacing=0 cellpadding=0 width=666 border=0><TBODY><TR><TD width=666 align=right >
   <font style="font-size: 10px;">Autentica&ccedil;&atilde;o mec&acirc;nica - Ficha de Compensação</font>
 </TD></tr></tbody></table>
@@ -361,7 +269,4 @@
 </div>
 
 </div>
-
-</body>
-
-</html>
+</div>

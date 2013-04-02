@@ -10,6 +10,24 @@ module BoletoBr
   mattr_accessor :date_format
   @@date_format = "%d/%m/%Y"
 
+  mattr_accessor :title
+  @@title = "Boleto Br"
+
+  mattr_accessor :identificacao
+  @@identificacao = "Boleto Br"
+
+  mattr_accessor :cpf_cnpj
+  @@cpf_cnpj = ""
+
+  mattr_accessor :endereco
+  @@endereco = "Endereco da empresa"
+
+  mattr_accessor :cidade_uf
+  @@cidade_uf = "Cidade / Estado"
+
+  mattr_accessor :cedente
+  @@cedente = "Razao social da empresa"
+
   def self.setup
     yield self
   end

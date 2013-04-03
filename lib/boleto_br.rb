@@ -37,3 +37,4 @@ end
 require "boleto_br/engine"
 require "boleto_br/strategies_common"
 require "boleto_br/strategies/bb"
+require "boleto_br/strategies/hsbc"

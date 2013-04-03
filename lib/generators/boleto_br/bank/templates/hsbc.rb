@@ -1,6 +1,6 @@
 
-def bb
-  @boleto = BoletoBr::Strategies::BB.new
+def hsbc
+  @boleto = BoletoBr::Strategies::HSBC.new
   @boleto.setup do |config|
     config.data_venc = Date.today + 5.days
     config.valor_boleto = number_to_currency "1250,00", unit: "", separator: ",", delimiter: ""
@@ -28,20 +28,12 @@ def bb
     config.data[:especie]        = "R$"
     config.data[:especie_doc]    = "DM"
 
-    #// DADOS DA SUA CONTA - BANCO DO BRASIL
-    config.data[:agencia] = "9999" #// Num da agencia, sem digito
+    #// DADOS DA SUA CONTA
+    config.data[:agencia] = "9999"  #// Num da agencia, sem digito
     config.data[:conta] = "99999" 	#// Num da conta, sem digito
 
-    #// DADOS PERSONALIZADOS - BANCO DO BRASIL
-    config.data[:convenio] = 7777777  #// Num do convenio - REGRA: 6 ou 7 ou 8 digitos
-    config.data[:contrato] = 999999   #// Num do seu contrato
-    config.data[:carteira] = 18
-    config.data[:variacao_carteira] = "-019"  #// Variacao da Carteira, com traco (opcional)
-
-    #// TIPO DO BOLETO
-    #// REGRA: 8 p/ Convenio c/ 8 digitos, 7 p/ Convenio c/ 7 digitos, ou 6 se Convenio c/ 6 digitos
-    config.data[:formatacao_convenio] = "7"
-    #// REGRA: Usado apenas p/ Convenio c/ 6 digitos: informe 1 se for NossoNumero de até 5 digitos ou 2 para opcao de até 17 digitos
-    config.data[:formatacao_nosso_numero] = "2"
+    #// DADOS PERSONALIZADOS - HSBC
+    config.data[:codigo_cedente] = "1122334" # Codigo do Cedente (Somente 7 digitos)
+    config.data[:carteira]       = "CNR"     # Codigo da Carteira
   end
 end

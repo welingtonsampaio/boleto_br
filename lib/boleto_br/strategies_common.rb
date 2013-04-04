@@ -1,59 +1,55 @@
 module BoletoBr
   module Strategies
     class Commom
-      attr_accessor :data_venc,
-                    :valor_boleto,
-                    :codigo_banco,
-                    :agencia,
-                    :conta,
-                    :carteira,
+      attr_accessor :agencia,
                     :agencia_codigo,
-                    :num_moeda,
-                    :livre_zeros,
+                    :carteira,
+                    :codigo_banco,
                     :codigo_banco_com_dv,
-                    :fator_vencimento,
-                    :valor,
-                    :nosso_numero,
+                    :conta,
+                    :data,
+                    :data_vencimento,
                     :dv,
+                    :fator_vencimento,
                     :linha,
-                    :data
+                    :livre_zeros,
+                    :nosso_numero,
+                    :num_moeda,
+                    :valor_boleto
 
       def initialize
         @data = {}
-        @data[:nosso_numero]            = nil
-        @data[:numero_documento]        = nil
-        @data[:data_vencimento]         = nil
+        @data[:aceite]                  = "N"
+        @data[:contrato]                = nil
+        @data[:convenio]                = nil
         @data[:data_documento]          = nil
         @data[:data_processamento]      = nil
-        @data[:valor_boleto]            = nil
-        @data[:sacado]                  = nil
-        @data[:endereco1]               = nil
-        @data[:endereco2]               = nil
         @data[:demonstrativo1]          = nil
         @data[:demonstrativo2]          = nil
         @data[:demonstrativo3]          = nil
+        @data[:endereco1]               = nil
+        @data[:endereco2]               = nil
+        @data[:especie]                 = "R"
+        @data[:especie_doc]             = "DM"
+        @data[:identificacao]           = nil
         @data[:instrucoes1]             = nil
         @data[:instrucoes2]             = nil
         @data[:instrucoes3]             = nil
         @data[:instrucoes4]             = nil
+        @data[:numero_documento]        = nil
         @data[:quantidade]              = "10"
+        @data[:sacado]                  = nil
         @data[:valor_unitario]          = "10"
-        @data[:aceite]                  = "N"
-        @data[:especie]                 = "R"
-        @data[:especie_doc]             = "DM"
-        @data[:agencia]                 = nil
-        @data[:conta]                   = nil
-        @data[:convenio]                = nil
-        @data[:contrato]                = nil
-        @data[:carteira]                = nil
         @data[:variacao_carteira]       = nil
-        @data[:formatacao_convenio]     = nil
-        @data[:formatacao_nosso_numero] = "2"
-        @data[:identificacao]           = nil
-        @data[:cpf_cnpj]                = nil
-        @data[:endereco]                = nil
-        @data[:cidade_uf]               = nil
-        @data[:cedente]                 = nil
+      end
+
+      def get_data symbol
+        return @data[ symbol.to_sym ] if @data[ symbol.to_sym ].present?
+        false
+      end
+
+      def set_data symbol, value
+        @data[ symbol.to_sym ] = value
       end
 
       def setup
@@ -68,26 +64,12 @@ module BoletoBr
       # @param [String] insert
       # @param [String] tipo
       # @return [String]
-      def formata_numero number, loop, insert, type=nil
-        type ||= "geral"
+      def formata_numero number, opts={}
         number = number.to_s
-        if type == "geral"
-          number.sub! ",",""
-          while number.length < loop
-            number = "#{insert}#{number}"
-          end
-        end
-        if type == "valor"
-          number.sub! ",",""
-          while number.length < loop
-            number = "#{insert}#{number}"
-          end
-        end
-        if type == "convenio"
-          while number.length < loop
-            number = "#{number}#{insert}"
-          end
-        end
+        opts   = { loop: 10, insert: :"0" }.merge opts
+        # remove as virgulas e pontos caso seja um valor de dinheiro
+        number.gsub! /[,\.\ ]/ , ''
+        (opts[:loop] - number.length).times { number = "#{opts[:insert]}#{number}" }
         number
       end
 
@@ -100,8 +82,8 @@ module BoletoBr
       end
 
       # Gera o Codigo de Barras
-      def fbarcode valor
-
+      def fbarcode valor = nil
+        valor ||= @data[:codigo_barras]
         fino   = 1
         largo  = 3
         altura = 50
@@ -130,9 +112,8 @@ module BoletoBr
         end
         barcodes
 
-        ##//Desenho da barra
-        ##//Guarda inicial
-
+        ## Desenho da barra
+        ## Guarda inicial
         _return =  %`<img src="/assets/boleto_br/p.png" width="#{fino}" height="#{altura}" border="0" />`
         _return << %`<img src="/assets/boleto_br/b.png" width="#{fino}" height="#{altura}" border="0" />`
         _return << %`<img src="/assets/boleto_br/p.png" width="#{fino}" height="#{altura}" border="0" />`
@@ -149,18 +130,16 @@ module BoletoBr
           (1..10).each do |i|
             next if i.even?
             f1 = if f.slice((i-1),1) == "0" then fino else largo end
-
             _return << %`<img src="/assets/boleto_br/p.png" width="#{f1}" height="#{altura}" border="0" />`
 
             f2 = if f.slice(i,1) == "0" then fino else largo end
-
             _return << %`<img src="/assets/boleto_br/b.png" width="#{f2}" height="#{altura}" border="0" />`
 
           end
         end
         _return << %`<img src="/assets/boleto_br/p.png" width="#{largo}" height="#{altura}" border="0" />`
         _return << %`<img src="/assets/boleto_br/b.png" width="#{fino}" height="#{altura}" border="0" />`
-        _return << %`<img src="/assets/boleto_br/p.png" width="1" height="#{altura}" border="0" />`
+        _return << %`<img src="/assets/boleto_br/p.png" width="#{fino}" height="#{altura}" border="0" />`
         _return.html_safe
       end
 

@@ -17,7 +17,7 @@ module BoletoBr
   @@identificacao = "Boleto Br"
 
   mattr_accessor :cpf_cnpj
-  @@cpf_cnpj = ""
+  @@cpf_cnpj = true
 
   mattr_accessor :endereco
   @@endereco = "Endereco da empresa"

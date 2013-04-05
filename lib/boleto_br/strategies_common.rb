@@ -14,7 +14,8 @@ module BoletoBr
                     :livre_zeros,
                     :nosso_numero,
                     :num_moeda,
-                    :valor_boleto
+                    :valor_boleto,
+                    :valor_real
 
       def initialize
         @data = {}
@@ -134,7 +135,7 @@ module BoletoBr
         valor.each do |hash|
           _return << %`<img src="/assets/boleto_br/#{hash[:color]}.png" width="#{hash[:width]}" height="#{hash[:height]}" border="0" />`
         end
-        _return
+        _return.html_safe
       end
 
       def esquerda entra, comp

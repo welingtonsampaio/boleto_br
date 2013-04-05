@@ -10,9 +10,9 @@ module BoletoBr
 
       def setup
         super
-        @codigo_banco_com_dv  = geraCodigoBanco @codigo_banco
-        @fator_vencimento     = (Date.new(1997, 10, 7).jd - @data_venc.jd).abs
-        @valor                = formata_numero String.new(@valor_boleto), 10, 0, "valor"
+        @codigo_banco_com_dv  = geraCodigoBanco codigo_banco
+        @fator_vencimento     = (Date.new(1997, 10, 7).jd - data_vencimento.jd).abs
+        @valor                = formata_numero String.new(valor_boleto), 10, 0, "valor"
         @carteira             = @data[:carteira]
         @codigo_cedente       = formata_numero String.new(@data[:codigo_cedente]), 7, 0
         @documento            = String.new @data[:numero_documento].to_s

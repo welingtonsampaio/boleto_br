@@ -13,6 +13,7 @@ module BoletoBr
         super
         @codigo_banco_com_dv  = gera_codigo_banco codigo_banco
         @fator_vencimento     = (Date.new(1997, 10, 7).jd - data_vencimento.jd).abs.to_s
+        @valor_real           = valor_boleto.clone
         @valor_boleto         = formata_numero valor_boleto, { loop: 10, insert: 0 }
         @agencia              = formata_numero agencia,      { loop: 4,  insert: 0 }
         @conta                = formata_numero conta,        { loop: 8,  insert: 0 }
@@ -79,13 +80,14 @@ module BoletoBr
 
         # Montando o nosso numero que aparecerá no boleto
         @nosso_numero = "#{get_data :convenio}#{nosso_numero}"
+        nosso_numero
       end
 
       def formatacao_6
         set_data :convenio, formata_numero( get_data(:convenio), { loop: 6, insert: 0} )
         # Nosso número de até 9 dígitos
         if get_data(:formatacao_nosso_numero) == "1"
-          @nosso_numero = formata_numero( nosso_numero, {loop:5, insert:0} )
+          @nosso_numero = formata_numero( nosso_numero.clone, {loop:5, insert:0} )
           @dv = modulo_11 "#{codigo_banco}"       <<
                           "#{num_moeda}"          <<
                           "#{fator_vencimento}"   <<

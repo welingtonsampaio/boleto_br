@@ -16,7 +16,7 @@
 
     <div class="header">
       <div class="w150"><img src="/assets/boleto_br/logobb.jpg" /></div>
-      <div class="w50 field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
+      <div class="w50 field_cod_banco"><%= @boleto.codigo_banco_com_dv %></div>
       <div class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></div>
     </div><!-- final .header -->
 
@@ -27,19 +27,19 @@
       </div>
       <div class="w130 border">
         <p class="title text-left">Agência / Código do Cedente</p>
-        <p class="content text-right"><%= @boleto.data[:agencia_codigo]%>&nbsp;</p>
+        <p class="content text-right"><%= @boleto.agencia_codigo %>&nbsp;</p>
       </div>
       <div class="w40 border">
         <p class="title text-left">Espécie</p>
-        <p class="content text-center"><%= @boleto.data[:especie]%>&nbsp;</p>
+        <p class="content text-center"><%= @boleto.data[:especie]%></p>
       </div>
       <div class="w50 border">
         <p class="title text-left">Quantidade</p>
-        <p class="content text-center"><%= @boleto.data[:quantidade]%>&nbsp;</p>
+        <p class="content text-center"><%= @boleto.data[:quantidade]%></p>
       </div>
       <div class="w120 border">
         <p class="title text-left">Nosso número</p>
-        <p class="content text-right"><%= @boleto.data[:nosso_numero]%></p>
+        <p class="content text-right"><%= @boleto.nosso_numero %></p>
       </div>
     </div><!-- final .line -->
 
@@ -58,11 +58,11 @@
       </div>
       <div class="w130 border">
         <p class="title text-left">Vencimento</p>
-        <p class="content text-center"><%= @boleto.data[:data_vencimento]%></p>
+        <p class="content text-center"><%= boleto_date @boleto.data_vencimento%></p>
       </div>
       <div class="w180 border">
         <p class="title text-left">Valor documento</p>
-        <p class="content text-right"><%= @boleto.data[:valor_boleto]%></p>
+        <p class="content text-right"><%= @boleto.valor_real %></p>
       </div>
     </div><!-- final .line -->
 
@@ -106,7 +106,7 @@
 
     <div class="header">
       <div class="w150"><img src="/assets/boleto_br/logobb.jpg" /></div>
-      <div class="w50 field_cod_banco"><%= @boleto.data[:codigo_banco_com_dv]%></div>
+      <div class="w50 field_cod_banco"><%= @boleto.codigo_banco_com_dv %></div>
       <div class="linha_digitavel"><%= @boleto.data[:linha_digitavel]%></div>
     </div><!-- final .header -->
 
@@ -117,7 +117,7 @@
       </div>
       <div class="w180 border highlight">
         <p class="title text-left">Vencimento</p>
-        <p class="content text-right"><%= @boleto.data[:data_vencimento]%></p>
+        <p class="content text-right"><%= boleto_date @boleto.data_vencimento %></p>
       </div>
     </div><!-- final .line -->
 
@@ -128,7 +128,7 @@
       </div>
       <div class="w180 border">
         <p class="title text-left">Ag&ecirc;ncia/C&oacute;digo cedente</p>
-        <p class="content text-right"><%= @boleto.data[:agencia_codigo]%></p>
+        <p class="content text-right"><%= @boleto.agencia_codigo %></p>
       </div>
     </div><!-- final .line -->
 
@@ -155,7 +155,7 @@
       </div>
       <div class="w180 border">
         <p class="title text-left">Nosso n&uacute;mero</p>
-        <p class="content text-right"><%= @boleto.data[:nosso_numero]%></p>
+        <p class="content text-right"><%= @boleto.nosso_numero %></p>
       </div>
     </div><!-- final .line -->
 
@@ -182,7 +182,7 @@
       </div>
       <div class="w180 border">
         <p class="title text-left">(=) Valor documento</p>
-        <p class="content text-right"><%= @boleto.data[:valor_boleto]%></p>
+        <p class="content text-right"><%= @boleto.valor_real %></p>
       </div>
     </div><!-- final .line -->
 

@@ -261,7 +261,7 @@
     </div><!-- final .cut_footer -->
 
     <div class="barcode">
-      <p><%= @boleto.fbarcode @boleto.data[:codigo_barras] %></p>
+      <p><%= @boleto.barcode_html @boleto.generate_hash_barcode %></p>
     </div><!-- final .barcode -->
 
     <div class="cut">

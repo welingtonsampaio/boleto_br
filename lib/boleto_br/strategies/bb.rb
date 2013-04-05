@@ -4,141 +4,132 @@ module BoletoBr
 
       def initialize
         super
-        @codigo_banco = "001"
-        @num_moeda    = "9"
-        @livre_zeros  = "000000"
+        self.codigo_banco = "001"
+        self.num_moeda    = "9"
+        self.livre_zeros  = "000000"
       end
 
       def setup
         super
-        @codigo_banco_com_dv  = geraCodigoBanco @codigo_banco
-        @fator_vencimento     = (Date.new(1997, 10, 7).jd - @data_venc.jd).abs
-        @valor                = formata_numero String.new(@valor_boleto), 10, 0, "valor"
-        @agencia              = formata_numero @data[:agencia],       4, 0
-        @conta                = formata_numero @data[:conta],         8, 0
-        @carteira             = @data[:carteira]
-        @agencia_codigo       = "#{@agencia}-#{modulo_11 @agencia} / #{@conta}-#{modulo_11 @conta}"
+        @codigo_banco_com_dv  = gera_codigo_banco codigo_banco
+        @fator_vencimento     = (Date.new(1997, 10, 7).jd - data_vencimento.jd).abs.to_s
+        @valor_boleto         = formata_numero valor_boleto, { loop: 10, insert: 0 }
+        @agencia              = formata_numero agencia,      { loop: 4,  insert: 0 }
+        @conta                = formata_numero conta,        { loop: 8,  insert: 0 }
+        @agencia_codigo       = "#{agencia}-#{modulo_11 agencia} / #{conta}-#{modulo_11 conta}"
 
-        formatacao_8 if @data[:formatacao_convenio] == "8"
-        formatacao_7 if @data[:formatacao_convenio] == "7"
-        formatacao_6 if @data[:formatacao_convenio] == "6"
+        formatacao_8 if get_data(:formatacao_convenio) == "8"
+        formatacao_7 if get_data(:formatacao_convenio) == "7"
+        formatacao_6 if get_data(:formatacao_convenio) == "6"
 
-        @data[:codigo_barras]       = @linha
-        @data[:linha_digitavel]     = monta_linha_digitavel @linha
-        @data[:agencia_codigo]      = @agencia_codigo
-        @data[:nosso_numero]        = @nosso_numero
-        @data[:codigo_banco_com_dv] = @codigo_banco_com_dv
-        @data[:data_vencimento]     = @data_venc.strftime BoletoBr::date_format
-        @data[:data_documento]      = date_today
-        @data[:data_processamento]  = date_today
-        @data[:valor_boleto]        = @valor_boleto
-
+        set_data :codigo_barras,      linha
+        set_data :linha_digitavel,    monta_linha_digitavel(linha)
+        set_data :data_documento,     date_today
+        set_data :data_processamento, date_today
       end
 
-    private
-
       def formatacao_8
-        @convenio = formata_numero @data[:convenio], 8, 0, "convenio"
-        #// Nosso número de até 9 dígitos
-        @nosso_numero = formata_numero @data[:nosso_numero], 9, 0
-        @dv           = modulo_11 "#{@codigo_banco}"     <<
-                                  "#{@num_moeda}"        <<
-                                  "#{@fator_vencimento}" <<
-                                  "#{@valor}"            <<
-                                  "#{@livre_zeros}"      <<
-                                  "#{@convenio}"         <<
-                                  "#{@nosso_numero}"     <<
-                                  "#{@carteira}"
+        set_data :convenio, formata_numero( get_data(:convenio), { loop: 8, insert: 0} )
+        # Nosso número de até 9 dígitos
+        @nosso_numero = formata_numero nosso_numero, {loop:9, insert:0}
+        @dv = modulo_11 "#{codigo_banco}"       <<
+                        "#{num_moeda}"          <<
+                        "#{fator_vencimento}"   <<
+                        "#{valor_boleto}"       <<
+                        "#{livre_zeros}"        <<
+                        "#{get_data :convenio}" <<
+                        "#{nosso_numero}"       <<
+                        "#{get_data :carteira}"
 
-        @linha = "#{@codigo_banco}"     <<
-            "#{@num_moeda}"        <<
-            "#{@dv}"               <<
-            "#{@fator_vencimento}" <<
-            "#{@valor}"            <<
-            "#{@livre_zeros}"      <<
-            "#{@convenio}"         <<
-            "#{@nosso_numero}"     <<
-            "#{@carteira}"
+        @linha = "#{codigo_banco}"       <<
+                 "#{num_moeda}"          <<
+                 "#{dv}"                 <<
+                 "#{fator_vencimento}"   <<
+                 "#{valor_boleto}"       <<
+                 "#{livre_zeros}"        <<
+                 "#{get_data :convenio}" <<
+                 "#{nosso_numero}"       <<
+                 "#{get_data :carteira}"
         #//montando o nosso numero que aparecerá no boleto
-        @nosso_numero = "#{@convenio}#{@nosso_numero}-#{modulo_11 "#{@convenio}#{@nosso_numero}"}"
+        @nosso_numero = "#{get_data :convenio}#{nosso_numero}-#{modulo_11 "#{get_data :convenio}#{nosso_numero}"}"
       end
 
       def formatacao_7
-        @convenio = formata_numero @data[:convenio], 7, 0, "convenio"
-        #// Nosso número de até 9 dígitos
-        @nosso_numero = formata_numero @data[:nosso_numero], 10, 0
-        @dv           = modulo_11 "#{@codigo_banco}"     <<
-                                  "#{@num_moeda}"        <<
-                                  "#{@fator_vencimento}" <<
-                                  "#{@valor}"            <<
-                                  "#{@livre_zeros}"      <<
-                                  "#{@convenio}"         <<
-                                  "#{@nosso_numero}"     <<
-                                  "#{@carteira}"
+        set_data :convenio, formata_numero( get_data(:convenio), { loop: 7, insert: 0} )
+        # Nosso número de até 9 dígitos
+        @nosso_numero = formata_numero nosso_numero, {loop:10, insert:0}
+        @dv = modulo_11 "#{codigo_banco}"       <<
+                        "#{num_moeda}"          <<
+                        "#{fator_vencimento}"   <<
+                        "#{valor_boleto}"       <<
+                        "#{livre_zeros}"        <<
+                        "#{get_data :convenio}" <<
+                        "#{nosso_numero}"       <<
+                        "#{get_data :carteira}"
 
-        @linha = "#{@codigo_banco}"     <<
-                 "#{@num_moeda}"        <<
-                 "#{@dv}"               <<
-                 "#{@fator_vencimento}" <<
-                 "#{@valor}"            <<
-                 "#{@livre_zeros}"      <<
-                 "#{@convenio}"         <<
-                 "#{@nosso_numero}"     <<
-                 "#{@carteira}"
-        @linha;
-        #//montando o nosso numero que aparecerá no boleto
-        @nosso_numero = "#{@convenio}#{@nosso_numero}"
+        @linha = "#{codigo_banco}"       <<
+                 "#{num_moeda}"          <<
+                 "#{dv}"                 <<
+                 "#{fator_vencimento}"   <<
+                 "#{valor_boleto}"       <<
+                 "#{livre_zeros}"        <<
+                 "#{get_data :convenio}" <<
+                 "#{nosso_numero}"       <<
+                 "#{get_data :carteira}"
+
+        # Montando o nosso numero que aparecerá no boleto
+        @nosso_numero = "#{get_data :convenio}#{nosso_numero}"
       end
 
       def formatacao_6
-        @convenio = formata_numero @data[:convenio], 6, 0, "convenio"
-        #// Nosso número de até 9 dígitos
-        if @data[:formatacao_nosso_numero] == "1"
-          @nosso_numero = formata_numero @data[:nosso_numero], 5, 0
-          @dv           = modulo_11 "#{@codigo_banco}"     <<
-                                    "#{@num_moeda}"        <<
-                                    "#{@fator_vencimento}" <<
-                                    "#{@valor}"            <<
-                                    "#{@convenio}"         <<
-                                    "#{@nosso_numero}"     <<
-                                    "#{@agencia}"          <<
-                                    "#{@conta}"            <<
-                                    "#{@carteira}"
+        set_data :convenio, formata_numero( get_data(:convenio), { loop: 6, insert: 0} )
+        # Nosso número de até 9 dígitos
+        if get_data(:formatacao_nosso_numero) == "1"
+          @nosso_numero = formata_numero( nosso_numero, {loop:5, insert:0} )
+          @dv = modulo_11 "#{codigo_banco}"       <<
+                          "#{num_moeda}"          <<
+                          "#{fator_vencimento}"   <<
+                          "#{valor_boleto}"       <<
+                          "#{get_data :convenio}" <<
+                          "#{nosso_numero}"       <<
+                          "#{agencia}"            <<
+                          "#{conta}"              <<
+                          "#{get_data :carteira}"
 
-          @linha = "#{@codigo_banco}"     <<
-                   "#{@num_moeda}"        <<
-                   "#{@dv}"               <<
-                   "#{@fator_vencimento}" <<
-                   "#{@valor}"            <<
-                   "#{@convenio}"         <<
-                   "#{@nosso_numero}"     <<
-                   "#{@agencia}"          <<
-                   "#{@conta}"            <<
-                   "#{@carteira}"
-          #//montando o nosso numero que aparecerá no boleto
-          @nosso_numero = "#{@convenio}#{@nosso_numero}-#{modulo_11 "#{@convenio}#{@nosso_numero}"}"
+          @linha = "#{codigo_banco}"       <<
+                   "#{num_moeda}"          <<
+                   "#{dv}"                 <<
+                   "#{fator_vencimento}"   <<
+                   "#{valor_boleto}"       <<
+                   "#{get_data :convenio}" <<
+                   "#{nosso_numero}"       <<
+                   "#{agencia}"            <<
+                   "#{conta}"              <<
+                   "#{get_data :carteira}"
+          # Montando o nosso numero que aparecerá no boleto
+          @nosso_numero = "#{get_data :convenio}#{nosso_numero}-#{modulo_11 "#{get_data :convenio}#{nosso_numero}"}"
         end
-        if @data[:formatacao_nosso_numero] == "2"
+        if get_data(:formatacao_nosso_numero) == "2"
           nservico = "21"
-          @nosso_numero = formata_numero @data[:nosso_numero], 17, 0
-          @dv           = modulo_11 "#{@codigo_banco}"     <<
-                                    "#{@num_moeda}"        <<
-                                    "#{@fator_vencimento}" <<
-                                    "#{@valor}"            <<
-                                    "#{@convenio}"         <<
-                                    "#{@nosso_numero}"     <<
-                                    "#{nservico}"
+          @nosso_numero = formata_numero( nosso_numero, {loop:17, insert:0} )
+          @dv = modulo_11 "#{codigo_banco}"       <<
+                          "#{num_moeda}"          <<
+                          "#{fator_vencimento}"   <<
+                          "#{valor_boleto}"       <<
+                          "#{get_data :convenio}" <<
+                          "#{nosso_numero}"       <<
+                          "#{nservico}"
 
-          @linha = "#{@codigo_banco}"     <<
-                   "#{@num_moeda}"        <<
-                   "#{@dv}"               <<
-                   "#{@fator_vencimento}" <<
-                   "#{@valor}"            <<
-                   "#{@convenio}"         <<
-                   "#{@nosso_numero}"     <<
+          @linha = "#{codigo_banco}"       <<
+                   "#{num_moeda}"          <<
+                   "#{dv}"                 <<
+                   "#{fator_vencimento}"   <<
+                   "#{valor_boleto}"       <<
+                   "#{get_data :convenio}" <<
+                   "#{nosso_numero}"       <<
                    "#{nservico}"
-          #//montando o nosso numero que aparecerá no boleto
-          @nosso_numero = "#{@convenio}#{@nosso_numero}-#{modulo_11 "#{@convenio}#{@nosso_numero}"}"
+          # Montando o nosso numero que aparecerá no boleto
+          @nosso_numero = "#{get_data :convenio}#{nosso_numero}-#{modulo_11 "#{get_data :convenio}#{nosso_numero}"}"
         end
       end
 
@@ -149,7 +140,7 @@ module BoletoBr
         parcial = []
         num = num.to_s
         (1..num.length).to_a.reverse.each do |i|
-          numeros[i] = num.slice i-1,1
+          numeros[i] = num.slice i-1, 1
           parcial[i] = numeros[i].to_i * fator
           soma += parcial[i]
           if fator == base
@@ -211,13 +202,14 @@ module BoletoBr
         digito
       end
 
+
+      # Posição 	Conteúdo
+      # 1 a 3    Número do banco
+      # 4        Código da Moeda - 9 para Real
+      # 5        Digito verificador do Código de Barras
+      # 6 a 19   Valor (12 inteiros e 2 decimais)
+      # 20 a 44  Campo Livre definido por cada banco
       def monta_linha_digitavel linha
-        #// Posição 	Conteúdo
-        #// 1 a 3    Número do banco
-        #// 4        Código da Moeda - 9 para Real
-        #// 5        Digito verificador do Código de Barras
-        #// 6 a 19   Valor (12 inteiros e 2 decimais)
-        #// 20 a 44  Campo Livre definido por cada banco
 
         #// 1. Campo - composto pelo código do banco, código da moéda, as cinco primeiras posições
         #// do campo livre e DV (modulo10) deste campo
@@ -258,17 +250,12 @@ module BoletoBr
         "#{campo1} #{campo2} #{campo3} #{campo4} #{campo5}"
       end
 
-      def geraCodigoBanco numero
+      def gera_codigo_banco numero
         parte1 = numero.to_s.slice 0, 3
         parte2 = modulo_11(parte1)
         "#{parte1}-#{parte2}"
       end
 
-
-
-      
-
     end
-
   end
 end

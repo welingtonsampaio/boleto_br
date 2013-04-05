@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{TODO: Write a gem summary}
   gem.homepage      = "https://github.com/welingtonsampaio/boleto_br"
 
-  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "rspec", ">= 2.13.0"
   gem.add_development_dependency "autotest-standalone"
   gem.add_development_dependency "test_notifier"
   gem.add_dependency "railties",       ">= 3.1"

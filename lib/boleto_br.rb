@@ -1,5 +1,6 @@
 require "rails"
-require 'active_support/dependencies'
+require "date"
+require 'active_support'
 require "boleto_br/version"
 
 module BoletoBr
@@ -17,7 +18,7 @@ module BoletoBr
   @@identificacao = "Boleto Br"
 
   mattr_accessor :cpf_cnpj
-  @@cpf_cnpj = ""
+  @@cpf_cnpj = true
 
   mattr_accessor :endereco
   @@endereco = "Endereco da empresa"

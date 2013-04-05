@@ -1,5 +1,6 @@
 require "rails"
-require 'active_support/dependencies'
+require "date"
+require 'active_support'
 require "boleto_br/version"
 
 module BoletoBr

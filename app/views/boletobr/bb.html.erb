@@ -260,7 +260,7 @@
   <font style="font-size: 10px;">Autentica&ccedil;&atilde;o mec&acirc;nica - Ficha de Compensação</font>
 </TD></tr></tbody></table>
 <div class="barcode">
-  <p><%= @boleto.fbarcode @boleto.data[:codigo_barras] %></p>
+  <p><%= @boleto.barcode_html @boleto.generate_hash_barcode %></p>
 </div>
 <div class="cut">
   <p>Corte na linha pontilhada</p>

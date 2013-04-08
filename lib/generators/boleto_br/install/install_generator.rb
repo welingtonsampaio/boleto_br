@@ -6,8 +6,11 @@ module BoletoBr
 
       source_root File.expand_path("../templates", __FILE__)
 
-      desc "Generates a model with the given NAME (if one does not exist) with devise " <<
-               "configuration plus a migration file and devise routes."
+      desc "Adiciona o arquivo de controller e o initializer do sistema de boletos."
+
+      def initialize_file
+        copy_file "boletobr.rb", "config/initializers/boletobr.rb"
+      end
 
       def create_controller
         copy_file "boletobr_controller.rb", "app/controllers/boletobr_controller.rb"

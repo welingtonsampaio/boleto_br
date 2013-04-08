@@ -2,7 +2,7 @@ require 'rails'
 
 module BoletoBr
   module Generators
-    class BankGenerator < ::Rails::Generators::NamedBase
+    class BancoGenerator < ::Rails::Generators::NamedBase
       include Rails::Generators::ResourceHelpers
 
       source_root File.expand_path("../templates", __FILE__)

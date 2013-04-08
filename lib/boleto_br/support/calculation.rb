@@ -3,14 +3,13 @@ module BoletoBr
     module Calculation
       # Verifica se o conteudo é um numero, retornando
       # true se for numerico e false caso contrario
-      # * *Returns* :
-      #   - Boolean
+      # @return [Boolean] true se o conteudo for numerico
       def is_numeric?
         self.to_s.empty? ? false : (self.to_s =~ (/\D/)).nil?
       end
-      def is_number?
-        is_numeric?
-      end
+      # @see BoletoBr::Support::Calculation.is_numeric?
+      alias_method :is_number?, :is_numeric?
+
     end
   end
 end

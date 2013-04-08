@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-=begin
-
-=end
 begin
   require 'date'
 rescue LoadError

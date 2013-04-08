@@ -105,12 +105,12 @@ module BoletoBr
                                 :message => "não é um número.", :allow_nil => true
 
 
-      def initialize
+      def initialize(opts={})
         {
-          :moeda => "9", :data_documento => Date.today, :dias_vencimento => 1, :quantidade => 1,
+          :moeda => "9", :data_documento => Date.today, :vencimento => 1, :quantidade => 1,
           :especie_documento => "DM", :especie => "R$", :aceite => "S", :valor => 0.0,
           :local_pagamento => "QUALQUER BANCO ATÉ O VENCIMENTO"
-        }.each do |campo, valor|
+        }.merge(opts).each do |campo, valor|
           send "#{campo}=", valor
         end
         especie
